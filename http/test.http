@@ -1,0 +1,43 @@
+POST http://localhost:8081/findByB
+Content-Type: application/x-www-form-urlencoded
+
+account=1048
+
+###
+
+
+POST http://localhost:8081/list
+Accept: application/json
+
+###
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{"account":"1048666899","passwd":"zyy123"}
+
+###
+
+
+POST http://localhost:80/api/item
+Content-Type: application/x-www-form-urlencoded
+
+id=99&content=new-element
+
+###
+GET http://localhost:8081/hello
+Accept: application/json
+
+
+###
+POST http://localhost:8081/hello/post
+Content-Type: application/x-www-form-urlencoded
+
+name=Test
+
+###
+POST http://localhost:8081/login
+Content-Type: application/x-www-form-urlencoded
+
+account=1048666899&passwd=zyy123
+
+###

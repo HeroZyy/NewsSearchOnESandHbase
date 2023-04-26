@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.zyy.zyyModel.dao.ArticleDao">
+  <resultMap id="BaseResultMap" type="com.example.zyy.MySQLTest.pojo.Article">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, `describe`, content, author, `time`
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.example.zyy.MySQLTest.pojo.Article">
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByTitle" resultType="com.example.zyy.MySQLTest.pojo.Article">
+    select
+    <include refid="Base_Column_List" />
+    from article
+    where title like '%${title}%'
+  </select>
+
+  <select id="selectByDescribe" resultType="com.example.zyy.MySQLTest.pojo.Article">
+    select
+    <include refid="Base_Column_List" />
+    from article
+    where `describe` like '%${describe}%'
+  </select>
+
+  <select id="selectByContent" resultType="com.example.zyy.MySQLTest.pojo.Article">
+    select
+    <include refid="Base_Column_List" />
+    from article
+    where content like '%${content}%'
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from article
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.zyy.MySQLTest.pojo.Article" useGeneratedKeys="true">
+    insert into article (title, `describe`, content, 
+      author, `time`)
+    values (#{title,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.zyy.MySQLTest.pojo.Article" useGeneratedKeys="true">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="describe != null">
+        `describe`,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.zyy.MySQLTest.pojo.Article">
+    update article
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.example.zyy.MySQLTest.pojo.Article">
+    update article
+    set title = #{title,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
