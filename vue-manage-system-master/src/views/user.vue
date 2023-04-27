@@ -16,7 +16,7 @@
 							</span>
 						</div>
 						<div class="info-name">{{ name }}</div>
-						<div class="info-desc">不可能！我的代码怎么可能会有bug！</div>
+						<div class="info-desc">人非生而知之者，孰能无惑？</div>
 					</div>
 				</el-card>
 			</el-col>
@@ -30,10 +30,10 @@
 					<el-form label-width="90px">
 						<el-form-item label="用户名："> {{ name }} </el-form-item>
 						<el-form-item label="旧密码：">
-							<el-input type="password" v-model="form.old"></el-input>
+							<el-input type="password" v-model="user.passwd"></el-input>
 						</el-form-item>
 						<el-form-item label="新密码：">
-							<el-input type="password" v-model="form.new"></el-input>
+							<el-input type="password" v-model="user.newpasswd"></el-input>
 						</el-form-item>
 						<el-form-item label="个人简介：">
 							<el-input v-model="form.desc"></el-input>
@@ -73,14 +73,47 @@ import { reactive, ref } from 'vue';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import avatar from '../assets/img/img.jpg';
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 const name = localStorage.getItem('ms_username');
 const form = reactive({
 	old: '',
 	new: '',
-	desc: '不可能！我的代码怎么可能会有bug！'
+	desc: '人非生而知之者，孰能无惑？'
 });
-const onSubmit = () => {};
+
+const user = reactive({
+  account: 'admin',
+  passwd: '123456',
+  newpasswd: '123456'
+});
+
+const onSubmit = () => {
+  let valid = false
+  axios.get('http://localhost:8081/updatePasswd', {
+    params: {
+      account: user.account,
+      passwd: user.passwd,
+      newpasswd: user.newpasswd
+    },
+    headers: {
+      // remove headers
+    }
+  }).then(response => {
+    valid = parseInt(response.data) > 0;
+    console.log(valid)
+    ElMessage.success('修改成功');
+
+    // if (valid) {
+    // }
+    // else {
+    //   ElMessage.error('修改失败');
+    // }
+  })
+
+
+};
 
 const avatarImg = ref(avatar);
 const imgSrc = ref('');

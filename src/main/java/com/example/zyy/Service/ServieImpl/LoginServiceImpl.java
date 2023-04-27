@@ -38,6 +38,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public Integer updatePasswd(String account, String passwd, String newpasswd) throws NoSuchAlgorithmException {
+        newpasswd = MD5Util.md5(newpasswd);
+        passwd = MD5Util.md5(passwd);
+        return  loginDao.updatePasswd(account,passwd,newpasswd);
+    }
+
+    @Override
     public LinkedList<user> list() {
         return loginDao.list();
     }

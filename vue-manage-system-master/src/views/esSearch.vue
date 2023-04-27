@@ -63,7 +63,9 @@ interface ResultInfo{
   currentPage: number;
   count: number;
 }
-
+interface RuleInfor{
+  str:    Array<string>
+}
 const countLen = reactive({count:100});
 const router = useRouter();
 
@@ -91,18 +93,21 @@ let resultContent = reactive<ResultInfo>({
   currentPage: 10,
   count: 0,
 });
-let title    = reactive({str:[]})
-let idSearch = reactive({str:[]})
-let describe = reactive({str:[]})
-let content  = reactive({str:[]})
-let time     = reactive({str:[]})
-let author   = reactive({str:[]})
-let list     = reactive({str:[]})
+let title    = reactive<RuleInfor>({str:[]})
+let idSearch = reactive<RuleInfor>({str:[]})
+let describe = reactive<RuleInfor>({str:[]})
+let content  = reactive<RuleInfor>({str:[]})
+let time     = reactive<RuleInfor>({str:[]})
+let author   = reactive<RuleInfor>({str:[]})
+let list     = reactive<RuleInfor>({str:[]})
 // let currentPage = ref(1)
 // let pageSize
 const permiss = usePermissStore();
 const login = ref<FormInstance>();
-const HBaseSearch = (i) => {
+const HBaseSearch = (i: string) => {
+  i = parseInt(i) % 4492 + ""
+  if(i==="0") i ="1"
+  console.log("i:"+ i)
   axios.get('http://localhost:8081/detailArticleById', {
     params: {
       id: `${i}`
@@ -113,6 +118,7 @@ const HBaseSearch = (i) => {
     }).then(response => {
       // alert(response.data["content"])
       contentData.content = response.data["content"]
+    console.log("contentData.content:"+ contentData.content)
     });
 }
 
@@ -131,7 +137,7 @@ const searchFun = () => {
         resultContent.time=[]
         resultContent.id=[]
         resultContent.count = response.data["count"] - 1
-        if(resultContent.count > 101) resultContent.count = 100;
+        if(resultContent.count > 500) resultContent.count = 300;
         if(resultContent.count < 0) resultContent.count = 1;
         for (var i = 0; i < resultContent.count; i++) {
           resultContent.title.push(response.data.dataList[i].title)

@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface LoginService {
+
+
     HashMap<String,String> login(String account, String passwd) throws NoSuchAlgorithmException;
+
+    Integer updatePasswd(String account, String passwd, String newpasswd) throws NoSuchAlgorithmException;
 
     LinkedList<user> list();
 

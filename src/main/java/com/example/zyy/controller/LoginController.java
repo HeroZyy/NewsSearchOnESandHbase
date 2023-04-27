@@ -26,6 +26,13 @@ public class LoginController {
         System.out.println(objectMapper.writeValueAsString(m));
         return objectMapper.writeValueAsString(m);
     }
+    @GetMapping("/updatePasswd")
+    public String updatePasswd(@RequestParam(name = "account", defaultValue = "admin") String account,@RequestParam(name = "passwd", defaultValue = "123456") String passwd,@RequestParam(name = "newpasswd", defaultValue = "123456") String newpasswd) throws NoSuchAlgorithmException, JsonProcessingException {
+        Integer m = loginService.updatePasswd(account, passwd ,newpasswd);
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(m));
+        return objectMapper.writeValueAsString(m);
+    }
 
     @PostMapping("/list")
     public CommonResp login(){

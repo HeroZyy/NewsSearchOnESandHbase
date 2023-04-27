@@ -57,7 +57,7 @@
                   <ChatDotRound/>
                 </el-icon>
                 <div class="grid-cont-right">
-                  <div class="grid-num">21561600</div>
+                  <div class="grid-num">457061</div>
                   <div>新闻条数</div>
                 </div>
               </div>

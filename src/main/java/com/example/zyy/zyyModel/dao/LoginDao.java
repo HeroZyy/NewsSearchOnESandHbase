@@ -13,6 +13,9 @@ public interface LoginDao {
     })
     user findByAcc(@Param("account") String account);
 
+    @Update("UPDATE user SET passwd=#{newpasswd} WHERE account = #{account};")
+    int updatePasswd( String account,String passwd, String newpasswd);
+
     @Select("SELECT passwd FROM user WHERE account = #{account}")
     String findPasswd(String account);
 
